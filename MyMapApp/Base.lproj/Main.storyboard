@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MyMapApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="qMB-zt-Bdq">
+                                <rect key="frame" x="0.0" y="83" width="375" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Qj8-0l-iwY">
+                                <rect key="frame" x="0.0" y="164" width="375" height="483"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="TyF-Ng-9qH" appends="YES" id="10l-cf-qK5"/>
+                                </connections>
+                            </mapView>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="0Lf-yU-Qem">
+                                <rect key="frame" x="0.0" y="27" width="375" height="56"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Qj8-0l-iwY" secondAttribute="trailing" id="5bI-5l-hJE"/>
+                            <constraint firstItem="Qj8-0l-iwY" firstAttribute="top" secondItem="qMB-zt-Bdq" secondAttribute="bottom" constant="25" id="Civ-bV-aeG"/>
+                            <constraint firstItem="qMB-zt-Bdq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Yj0-OJ-jH3"/>
+                            <constraint firstItem="0Lf-yU-Qem" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="b8N-Zj-sXM"/>
+                            <constraint firstItem="0Lf-yU-Qem" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="7" id="bOi-TW-8Yf"/>
+                            <constraint firstItem="qMB-zt-Bdq" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="icS-R8-453"/>
+                            <constraint firstItem="qMB-zt-Bdq" firstAttribute="top" secondItem="0Lf-yU-Qem" secondAttribute="bottom" id="ihp-LC-LF5"/>
+                            <constraint firstItem="0Lf-yU-Qem" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="jZD-rO-tyV"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Qj8-0l-iwY" secondAttribute="bottom" constant="20" id="lZF-cB-mHV"/>
+                            <constraint firstItem="Qj8-0l-iwY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="tKo-Uo-dkO"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <connections>
+                        <outlet property="destSearchBar" destination="qMB-zt-Bdq" id="Qeb-jm-Fpb"/>
+                        <outlet property="myMapView" destination="Qj8-0l-iwY" id="Q7L-BX-YzA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="TyF-Ng-9qH">
+                    <connections>
+                        <action selector="handleTapInMap:" destination="BYZ-38-t0r" id="eye-ew-Jd5"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="136.5" y="132.5"/>
+        </scene>
+    </scenes>
+</document>
