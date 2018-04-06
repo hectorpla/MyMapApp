@@ -27,6 +27,7 @@
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="TyF-Ng-9qH" appends="YES" id="10l-cf-qK5"/>
+                                    <outletCollection property="gestureRecognizers" destination="XGq-Rj-fxP" appends="YES" id="50Z-U1-yep"/>
                                 </connections>
                             </mapView>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="0Lf-yU-Qem">
@@ -57,9 +58,14 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="TyF-Ng-9qH">
                     <connections>
-                        <action selector="handleTapInMap:" destination="BYZ-38-t0r" id="eye-ew-Jd5"/>
+                        <action selector="handleTapInMap:" destination="BYZ-38-t0r" id="vDB-hO-zb0"/>
                     </connections>
                 </tapGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="XGq-Rj-fxP">
+                    <connections>
+                        <action selector="handleLongPressInMap:" destination="BYZ-38-t0r" id="ll7-km-Foc"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="136.5" y="132.5"/>
         </scene>

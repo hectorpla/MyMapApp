@@ -21,6 +21,9 @@ class ViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegate,
     
     var currentLocationCoordinate: CLLocationCoordinate2D!
     var searchedAnnotations = [MKAnnotation]()
+    var tappedAnnotation: MKAnnotation?
+    
+    var destination: MKMapItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,24 +75,50 @@ class ViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegate,
                 print(error!)
                 return
             }
-            do {
-                // clean up
-                self.cleanUpLocation()
-                
-                response!.mapItems.forEach({ (item) in
-                    let annotation = MKPointAnnotation()
-                    
-                    print(item.placemark)
-                    annotation.title = item.name
-                    annotation.subtitle = item.placemark.title // text displayed when tapped
-                    annotation.coordinate = item.placemark.coordinate
-                    self.searchedAnnotations.append(annotation)
-                })
-                
-                self.myMapView.addAnnotations(self.searchedAnnotations)
-                // TODO: handle selection and deselection
-            }
+            self.displaySearchedItems(response!.mapItems)
         }
+    }
+    
+    // Mark: handle search response
+    func displaySearchedItems(_ items: [MKMapItem]) {
+        do {
+            // clean up
+            self.cleanUpLocation()
+            
+            items.forEach({ (item) in
+                let annotation = MKPointAnnotation()
+                
+//                print(item.placemark)
+                annotation.title = item.name
+                annotation.subtitle = item.placemark.title // text displayed when tapped
+                annotation.coordinate = item.placemark.coordinate
+                self.searchedAnnotations.append(annotation)
+            })
+            
+            self.myMapView.addAnnotations(self.searchedAnnotations)
+            // TODO: handle selection and deselection
+        }
+    }
+    
+    // Mark: custom annotation view: animation
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
+        let identifier = "destAnnot"
+        var annotationView = myMapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+        
+        if annotationView == nil {
+            let annotationPinView = MKPinAnnotationView()
+            annotationPinView.pinTintColor = MKPinAnnotationView.purplePinColor()
+            annotationPinView.animatesDrop = true
+            annotationPinView.canShowCallout = true
+            annotationPinView.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            annotationView = annotationPinView
+        }
+        
+        return annotationView
     }
     
     func cleanUpLocation() {
@@ -97,16 +126,85 @@ class ViewController: UIViewController, UISearchBarDelegate, MKMapViewDelegate,
         searchedAnnotations.removeAll()
     }
     
-    // Mark: on tap behavior
-    @IBAction func handleTapInMap(_ sender: UITapGestureRecognizer) {
-        // check if the annotation is tapped
-        cleanUpLocation()
+    // Mark: pop up view for annotation
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        // check
+        getDirection(to: MKMapItem(placemark: MKPlacemark(coordinate: (view.annotation?.coordinate)!)))
     }
     
+    // Mark: long press behavior
+    @IBAction func handleLongPressInMap(_ gestureRecognizer: UILongPressGestureRecognizer) {
+        if gestureRecognizer.state == .began {
+            let location = gestureRecognizer.location(in: myMapView)
+            let tappedCoordinate = myMapView.convert(location, toCoordinateFrom: myMapView)
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = tappedCoordinate
+            annotation.title = "selected location"
+            annotation.subtitle = "..."
+            tappedAnnotation = annotation
+            myMapView.addAnnotation(annotation)
+        }
+    }
     
-    // Mark: custom annotation view: animation
-    
+    // Mark: on tap behavior
+    @IBAction func handleTapInMap(_ gestureRecognizer: UITapGestureRecognizer) {
+        if tappedAnnotation != nil {
+            myMapView.removeAnnotation(tappedAnnotation!)
+            tappedAnnotation = nil
+        }
+    }
     
     // TEMP: user location functionality beyond initial retrieval omitted
 }
 
+extension ViewController {
+    // Mark: direction
+    func getDirection(to dest: MKMapItem?) {
+        if dest == nil {
+            print("geting directions: no destination selected")
+        }
+        
+        let source = MKMapItem.forCurrentLocation()
+        
+        print("geting directions: source -> \(source)")
+        
+        let directionsRequest = MKDirectionsRequest()
+        directionsRequest.source = source
+        directionsRequest.destination = dest
+        directionsRequest.transportType = .walking
+        
+        MKDirections(request: directionsRequest)
+                .calculate { (response, error) in
+            if error != nil {
+                print("geting directions Error: \(error)")
+                return
+            }
+            self.drawSingleRoute(response!.routes.first) // check later
+        }
+    }
+    
+    // MARK: customize overlay style
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if overlay is MKPolyline {
+            let renderer = MKPolylineRenderer()
+            renderer.strokeColor = UIColor.cyan
+            renderer.lineWidth = 5
+            return renderer
+        } else {
+            return MKOverlayRenderer()
+        }
+    }
+    
+    // MARK: draw direction
+    func drawSingleRoute(_ route: MKRoute?) {
+        if route == nil {
+            print("drawSingleRoute: unexpected route is nil")
+            return
+        }
+        print("drawSingleRoute:", route!)
+        
+        // test
+        myMapView.addOverlays([route!.polyline], level: .aboveLabels)
+    }
+}
