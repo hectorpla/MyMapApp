@@ -18,40 +18,42 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="qMB-zt-Bdq">
-                                <rect key="frame" x="0.0" y="83" width="375" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Qj8-0l-iwY">
-                                <rect key="frame" x="0.0" y="164" width="375" height="483"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="TyF-Ng-9qH" appends="YES" id="10l-cf-qK5"/>
-                                    <outletCollection property="gestureRecognizers" destination="XGq-Rj-fxP" appends="YES" id="50Z-U1-yep"/>
-                                </connections>
-                            </mapView>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="0Lf-yU-Qem">
-                                <rect key="frame" x="0.0" y="27" width="375" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="N6P-lp-aLX">
+                                <rect key="frame" x="0.0" y="28" width="375" height="619"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Direction" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5jV-3D-TWV">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="qMB-zt-Bdq">
+                                        <rect key="frame" x="0.0" y="20.5" width="375" height="84"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </searchBar>
+                                    <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Qj8-0l-iwY">
+                                        <rect key="frame" x="0.0" y="104.5" width="375" height="514.5"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="TyF-Ng-9qH" appends="YES" id="10l-cf-qK5"/>
+                                            <outletCollection property="gestureRecognizers" destination="XGq-Rj-fxP" appends="YES" id="50Z-U1-yep"/>
+                                        </connections>
+                                    </mapView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Qj8-0l-iwY" secondAttribute="trailing" id="5bI-5l-hJE"/>
-                            <constraint firstItem="Qj8-0l-iwY" firstAttribute="top" secondItem="qMB-zt-Bdq" secondAttribute="bottom" constant="25" id="Civ-bV-aeG"/>
-                            <constraint firstItem="qMB-zt-Bdq" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Yj0-OJ-jH3"/>
-                            <constraint firstItem="0Lf-yU-Qem" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="b8N-Zj-sXM"/>
-                            <constraint firstItem="0Lf-yU-Qem" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="7" id="bOi-TW-8Yf"/>
-                            <constraint firstItem="qMB-zt-Bdq" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="icS-R8-453"/>
-                            <constraint firstItem="qMB-zt-Bdq" firstAttribute="top" secondItem="0Lf-yU-Qem" secondAttribute="bottom" id="ihp-LC-LF5"/>
-                            <constraint firstItem="0Lf-yU-Qem" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="jZD-rO-tyV"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Qj8-0l-iwY" secondAttribute="bottom" constant="20" id="lZF-cB-mHV"/>
-                            <constraint firstItem="Qj8-0l-iwY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="tKo-Uo-dkO"/>
+                            <constraint firstItem="N6P-lp-aLX" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="8" id="8UO-vJ-IjA"/>
+                            <constraint firstItem="N6P-lp-aLX" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="93t-kN-rMT"/>
+                            <constraint firstItem="N6P-lp-aLX" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="wac-VY-Uvv"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="N6P-lp-aLX" secondAttribute="bottom" constant="20" id="y4m-35-7g1"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="destSearchBar" destination="qMB-zt-Bdq" id="Qeb-jm-Fpb"/>
+                        <outlet property="directionInstruction" destination="5jV-3D-TWV" id="E3O-D9-trV"/>
                         <outlet property="myMapView" destination="Qj8-0l-iwY" id="Q7L-BX-YzA"/>
                     </connections>
                 </viewController>
@@ -67,7 +69,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="136.5" y="132.5"/>
+            <point key="canvasLocation" x="135.19999999999999" y="131.78410794602701"/>
         </scene>
     </scenes>
 </document>
